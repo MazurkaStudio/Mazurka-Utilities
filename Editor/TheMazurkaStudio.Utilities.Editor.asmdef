@@ -1,0 +1,18 @@
+{
+    "name": "TheMazurkaStudio.Utilities.Editor",
+    "rootNamespace": "TheMazurkaStudio.Utilities.Editor",
+    "references": [
+        "GUID:12cac5c447e0ab3418e26c84cc69a7df"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
