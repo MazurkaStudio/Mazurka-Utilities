@@ -34,5 +34,21 @@ namespace TheMazurkaStudio.Utilities
             list.RemoveAt(index);
             return item;
         }
+
+        public static bool TryAdd<T>(this IList<T> list, T component)
+        {
+            if (list.Contains(component)) return false;
+            
+            list.Add(component);
+            return true;
+        }
+        
+        public static bool TryRemove<T>(this IList<T> list, T component)
+        {
+            if (!list.Contains(component)) return false;
+            
+            list.Remove(component);
+            return true;
+        }
     }
 }
