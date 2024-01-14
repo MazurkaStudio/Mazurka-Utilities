@@ -26,7 +26,7 @@ namespace MazurkaFSM
         protected virtual bool CanExitState => true;
         
         
-        protected State(ref FSM fsm)
+        protected State(FSM fsm)
         {
             StateMachine = fsm;
         }
