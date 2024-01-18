@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -19,9 +20,20 @@ namespace TheMazurkaStudio.Editor
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var scenes= EditorBuildSettings.scenes.Select(x => x.path).ToArray();
-            // One line of  oxygen free code.
-            property.intValue = EditorGUI.Popup(position, label.text,  property.intValue, scenes);
+            var scenes = EditorBuildSettings.scenes.Select(x => x.path).ToArray();
+            var sceneNames = EditorBuildSettings.scenes.Select(x => System.IO.Path.GetFileNameWithoutExtension(x.path)).ToArray();
+
+            string currentScenePath = property.stringValue;
+
+            int selectedIndex = Mathf.Max(0, Array.IndexOf(scenes, currentScenePath));
+
+            // One line of oxygen-free code.
+            selectedIndex = EditorGUI.Popup(position, label.text, selectedIndex, sceneNames);
+
+            if (selectedIndex >= 0 && selectedIndex < scenes.Length)
+            {
+                property.stringValue = scenes[selectedIndex];
+            }
         }
     }
 }
