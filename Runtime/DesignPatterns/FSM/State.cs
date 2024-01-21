@@ -4,8 +4,6 @@ namespace MazurkaFSM
 {
     public abstract class State
     {
-        public FSM StateMachine { get; }
-
         /// <summary>
         /// Each time state enter, startTime will be set to StateMachine Time.time;
         /// </summary>
@@ -24,13 +22,6 @@ namespace MazurkaFSM
         /// Condition to be exited
         /// </summary>;
         protected virtual bool CanExitState => true;
-        
-        
-        protected State(FSM fsm)
-        {
-            StateMachine = fsm;
-        }
-
 
         public void EnterState()
         {
@@ -85,7 +76,6 @@ namespace MazurkaFSM
         /// <summary>
         /// Check after LateUpdate for transition
         /// </summary>
-        /// <param name="freezeCompleted"></param>
         protected abstract void OnCheckTransitions();
     }
 }

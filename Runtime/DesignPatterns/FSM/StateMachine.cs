@@ -3,13 +3,12 @@ using UnityEngine;
 
 namespace MazurkaFSM
 {
-    public class FSM 
+    public class StateMachine 
     {
-        public FSM(GameObject owner)
+        public StateMachine(GameObject owner)
         {
             Owner = owner;
         }
-        
         
         public State CurrentState { get; protected set; }
         public State LastState { get; protected set; }
@@ -25,7 +24,7 @@ namespace MazurkaFSM
         public event Action<State, State> StateHasBeenCanceled;
 
         
-        public virtual void StartFSM(State initialState)
+        public virtual void StartStateMachine(State initialState)
         {
             if (IsActive) return;
 
@@ -34,17 +33,17 @@ namespace MazurkaFSM
             IsActive = true;
         }
 
-        public virtual void PauseFSM()
+        public virtual void PauseStateMachine()
         {
             IsInPause = true;
         }
 
-        public virtual void ResumeFSM()
+        public virtual void ResumeStateMachine()
         {
             IsInPause = false;
         }
 
-        public virtual void StopFSM(bool exitLastState = true)
+        public virtual void StopStateMachine(bool exitLastState = true)
         {
             if (!IsActive) return;
 

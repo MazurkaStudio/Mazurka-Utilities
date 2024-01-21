@@ -84,19 +84,22 @@ namespace TheMazurkaStudio.Utilities
         public bool Contains(int2 position) => position.x >= MinX && position.x < MaxX && position.y >= MinY && position.y < MaxY;
         public bool Contains(Vector2Int position) => position.x >= MinX && position.x < MaxX && position.y >= MinY && position.y < MaxY;
         
-        public float2 NearPosition(float2 pos) => new(Mathf.Clamp(pos.x, MinX, MaxX), Mathf.Clamp(pos.y, MinY, MaxY));
-        public float2 NearPosition(Vector2Int pos) => new(Mathf.Clamp(pos.x, MinX, MaxX), Mathf.Clamp(pos.y, MinY, MaxY));
-        public Vector2 NearPosition(Vector2 pos) => new(Mathf.Clamp(pos.x, MinX, MaxX), Mathf.Clamp(pos.y, MinY, MaxY));
-        public Vector3 NearPosition(Vector3 pos) => new(Mathf.Clamp(pos.x, MinX, MaxX), Mathf.Clamp(pos.y, MinY, MaxY));
+        //Return position clamp in bounds (may be on limits)
+        public float2 ClampPosition(float2 pos) => new(Mathf.Clamp(pos.x, MinX, MaxX), Mathf.Clamp(pos.y, MinY, MaxY));
+        public float2 ClampPosition(Vector2Int pos) => new(Mathf.Clamp(pos.x, MinX, MaxX), Mathf.Clamp(pos.y, MinY, MaxY));
+        public Vector2 ClampPosition(Vector2 pos) => new(Mathf.Clamp(pos.x, MinX, MaxX), Mathf.Clamp(pos.y, MinY, MaxY));
+        public Vector3 ClampPosition(Vector3 pos) => new(Mathf.Clamp(pos.x, MinX, MaxX), Mathf.Clamp(pos.y, MinY, MaxY));
         
-        public int2 NearPositionInt(int2 pos) => new(math.clamp(pos.x, MinX, MaxX), math.clamp(pos.y, MinY, MaxY));
-        public int2 NearPositionInt(float2 pos) => new(Mathf.RoundToInt(math.clamp(pos.x, MinX, MaxX)), Mathf.RoundToInt(math.clamp(pos.y, MinY, MaxY)));
-        public int2 NearPositionInt(Vector2Int pos) => new(math.clamp(pos.x, MinX, MaxX), math.clamp(pos.y, MinY, MaxY));
-        public int2 NearPositionInt(Vector2 pos) => new(Mathf.RoundToInt(math.clamp(pos.x, MinX, MaxX)), Mathf.RoundToInt(math.clamp(pos.y, MinY, MaxY)));
-        public int2 NearPositionInt(Vector3 pos) => new(Mathf.RoundToInt(math.clamp(pos.x, MinX, MaxX)), Mathf.RoundToInt(math.clamp(pos.y, MinY, MaxY)));
+        
+        //Return in grid position (not on limits)
+        public int2 ClampInGrid(int2 pos) => new(math.clamp(pos.x, MinX, MaxX - 1), math.clamp(pos.y, MinY, MaxY - 1));
+        public int2 ClampInGrid(float2 pos) => new(Mathf.RoundToInt(math.clamp(pos.x, MinX, MaxX - 1)), Mathf.RoundToInt(math.clamp(pos.y, MinY, MaxY - 1)));
+        public int2 ClampInGrid(Vector2Int pos) => new(math.clamp(pos.x, MinX, MaxX - 1), math.clamp(pos.y, MinY, MaxY - 1));
+        public int2 ClampInGrid(Vector2 pos) => new(Mathf.RoundToInt(math.clamp(pos.x, MinX, MaxX - 1)), Mathf.RoundToInt(math.clamp(pos.y, MinY, MaxY - 1)));
+        public int2 ClampInGrid(Vector3 pos) => new(Mathf.RoundToInt(math.clamp(pos.x, MinX, MaxX - 1)), Mathf.RoundToInt(math.clamp(pos.y, MinY, MaxY - 1)));
 
 
-        public readonly void Debug(float duration)
+        public void Debug(float duration)
         {
             UnityEngine.Debug.DrawLine(new Vector3(MinX,MinY), new Vector3(MaxX, MinY), Color.green, duration);
             UnityEngine.Debug.DrawLine(new Vector3(MinX,MinY), new Vector3(MinX, MaxY), Color.green, duration);
