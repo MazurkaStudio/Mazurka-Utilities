@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace MazurkaFSM
+namespace TheMazurkaStudio.Utilities
 {
-    public abstract class State
+    public abstract class State : IState
     {
         /// <summary>
         /// Each time state enter, startTime will be set to StateMachine Time.time;
@@ -23,13 +23,13 @@ namespace MazurkaFSM
         /// </summary>;
         protected virtual bool CanExitState => true;
 
+        
         public void EnterState()
         {
             StartTime = Time.time;
             IsActive = true;
             OnStateEnter();
         }
-
         public bool TryExistState()
         {
             if (!CanExitState) return false;
@@ -38,44 +38,13 @@ namespace MazurkaFSM
             IsActive = false;
             return true;
         }
-
-        public void LogicUpdate()
-        {
-            OnDoCheck();
-            Update();
-
-#if DEBUG
-            DebugUpdate();
-#endif
-        }
-
-        public void PostUpdate()
-        {
-            LateUpdate();
-            OnCheckTransitions();
-        }
-
-        public void PhysicUpdate()
-        {
-            FixedUpdate();
-        }
-
-
-
+        
+        public abstract void LogicUpdate();
+        public abstract void PostUpdate();
+        public abstract void PhysicUpdate();
+        
+        
         protected abstract void OnStateEnter();
         protected abstract void OnStateExit();
-        /// <summary>
-        /// Use to initialize the state each frame before LogicUpdate (useful to get, check, cast,...)
-        /// </summary>
-        protected virtual void OnDoCheck() { }
-        protected virtual void Update() { }
-        protected virtual void FixedUpdate() { }
-        protected virtual void LateUpdate() { }
-        protected virtual void DebugUpdate() { }
-
-        /// <summary>
-        /// Check after LateUpdate for transition
-        /// </summary>
-        protected abstract void OnCheckTransitions();
     }
 }

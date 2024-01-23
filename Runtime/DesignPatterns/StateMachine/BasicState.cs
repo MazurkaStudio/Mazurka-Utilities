@@ -1,12 +1,10 @@
-using MazurkaFSM;
-
 namespace TheMazurkaStudio.Utilities
 {
-    public abstract class SimpleState : State
+    public abstract class BasicState : State
     {
         protected StateMachine stateMachine;
         
-        protected SimpleState(StateMachine stateMachine) : base()
+        protected BasicState(StateMachine stateMachine) : base()
         {
             this.stateMachine = stateMachine;
         }

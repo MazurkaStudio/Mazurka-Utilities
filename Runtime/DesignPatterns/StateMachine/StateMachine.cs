@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace MazurkaFSM
+namespace TheMazurkaStudio.Utilities
 {
     public class StateMachine 
     {
@@ -10,9 +10,9 @@ namespace MazurkaFSM
             Owner = owner;
         }
         
-        public State CurrentState { get; protected set; }
-        public State LastState { get; protected set; }
-        public State NextState { get; protected set; }
+        public IState CurrentState { get; protected set; }
+        public IState LastState { get; protected set; }
+        public IState NextState { get; protected set; }
     
         public bool IsActive { get; protected set; }
         public bool IsInPause { get; protected set; }
@@ -20,11 +20,11 @@ namespace MazurkaFSM
         
         public GameObject Owner { get; }
         
-        public event Action<State> StateHasChanged;
-        public event Action<State, State> StateHasBeenCanceled;
+        public event Action<IState> StateHasChanged;
+        public event Action<IState, IState> StateHasBeenCanceled;
 
         
-        public virtual void StartStateMachine(State initialState)
+        public virtual void StartStateMachine(IState initialState)
         {
             if (IsActive) return;
 
@@ -75,14 +75,14 @@ namespace MazurkaFSM
         }
 
 
-        public virtual bool ChangeState(State state)
+        public virtual bool ChangeState(IState state)
         {
             if (!IsActive || IsInPause || IsPerformingTransition || (state == CurrentState && !CurrentState.CanTransitionToSelf)) return false;
 
             return PerformTransition(state);
         }
         
-        protected virtual bool PerformTransition(State nextState)
+        protected virtual bool PerformTransition(IState nextState)
         {
             if (nextState == null ) return false;
 
