@@ -38,8 +38,8 @@ namespace TheMazurkaStudio.Utilities
 
         public void Complete()
         {
-            OnComplete();
             IsCompleted = true;
+            OnComplete();
             CommandHasBeenCompleted?.Invoke(this);
         }
         

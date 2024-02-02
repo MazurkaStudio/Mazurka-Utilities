@@ -58,7 +58,7 @@ namespace TheMazurkaStudio.Utilities
         {
             if (completeCurrent && IsExecutingCommands)
             {
-                currentQueueCommand.Complete();
+                if(!currentQueueCommand.IsCompleted) currentQueueCommand.Complete();
             }
 
             currentQueueCommand = default;
