@@ -16,7 +16,7 @@ namespace TheMazurkaStudio.Utilities
             
         [SerializeField] private float _bufferTime;
             
-        private float _lastTimeTrigger = float.MinValue;
+        [SerializeField] private float _lastTimeTrigger = float.MinValue;
 
         public bool IsInBuffer => Time.time - _lastTimeTrigger <= _bufferTime;
         public float RemainingTime => _bufferTime  - (Time.time - _lastTimeTrigger);

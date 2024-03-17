@@ -46,6 +46,10 @@ namespace TheMazurkaStudio.Utilities
             }
         }
         
+        /// <summary>
+        /// Reset scale, position, rotation
+        /// </summary>
+        /// <param name="transform"></param>
         public static void Reset(this Transform transform)
         {
             transform.position = Vector3.zero;
@@ -57,6 +61,18 @@ namespace TheMazurkaStudio.Utilities
         
         public static void DisableChildren(this Transform transform) => transform.PerformOnChildren(x => x.gameObject.SetActive(false));
 
+        /// <summary>
+        /// Get all children of the transform
+        /// </summary>
+        /// <param name="transform"></param>
+        /// <returns></returns>
         public static IEnumerable<Transform> Children(this Transform transform) => transform.Cast<Transform>();
+
+        /// <summary>
+        /// Look at with right direction of the transform
+        /// </summary>
+        /// <param name="transform"></param>
+        /// <param name="rightDir"></param>
+        public static void LookAt2D(this Transform transform, Vector2 rightDir) => transform.rotation = rightDir.LookAt2D();
     }
 }

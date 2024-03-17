@@ -51,5 +51,13 @@ namespace TheMazurkaStudio.Utilities
             }
             return minVector;
         }
+        
+        public static Quaternion LookAt2D(this Vector2 rightDir) => Quaternion.Euler(0f, 0f, Mathf.Atan2(rightDir.y, rightDir.x) * Mathf.Rad2Deg);
+        
+        public static float HorizontalDistance(this Vector2 from, Vector2 to) => Mathf.Abs(from.x - to.x);
+        public static float VerticalDistance(this Vector2 from, Vector2 to) => Mathf.Abs(from.y - to.y);
+        public static float HorizontalDistance(this Vector2 from, Vector3 to) => Mathf.Abs(from.x - to.x);
+        public static float VerticalDistance(this Vector2 from, Vector3 to) => Mathf.Abs(from.y - to.y);
+        public static float DepthDistance(this Vector2 from, Vector3 to) => Mathf.Abs(0f - to.z);
     }
 }

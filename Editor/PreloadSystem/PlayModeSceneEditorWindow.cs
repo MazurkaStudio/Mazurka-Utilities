@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace TheMazurkaStudio.Editor
+namespace TheMazurkaStudio.Utilities.Editor
 {
     public class PlayModeSceneEditorWindow : EditorWindow
     {

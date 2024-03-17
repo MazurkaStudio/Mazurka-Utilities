@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace TheMazurkaStudio.Editor
+namespace TheMazurkaStudio.Utilities.Editor
 {
     [FilePath("PreloadSystem/PlayModeSceneSettings.mazurka", FilePathAttribute.Location.PreferencesFolder)]
     public class PlayModeSceneSettings : ScriptableSingleton<PlayModeSceneSettings>

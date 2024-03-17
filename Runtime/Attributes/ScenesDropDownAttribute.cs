@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace TheMazurkaStudio
+namespace TheMazurkaStudio.Utilities
 {
     public class ScenesDropDownAttribute : PropertyAttribute { }
 }

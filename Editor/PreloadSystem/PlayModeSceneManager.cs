@@ -3,7 +3,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace TheMazurkaStudio.Editor
+namespace TheMazurkaStudio.Utilities.Editor
 {
     /// <summary>
     /// Make sure preload is alway start before other scenes

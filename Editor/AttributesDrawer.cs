@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace TheMazurkaStudio.Editor
+namespace TheMazurkaStudio.Utilities.Editor
 {
     [CustomPropertyDrawer(typeof(LayerAttribute))]
     public class LayerAttributeEditor : PropertyDrawer

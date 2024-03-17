@@ -13,6 +13,8 @@ public static class QuaternionExtensions
 
         return a * Quaternion.Inverse(b);
     }
-
+   
+    
+    
     public static Quaternion Multiply(Quaternion input, float scalar) => new Quaternion(input.x * scalar, input.y * scalar, input.z * scalar, input.w * scalar);
 }
