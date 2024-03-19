@@ -224,19 +224,7 @@ namespace TheMazurkaStudio.Utilities.Sensors
             return null;
         }
 
-        public void ApplyParameters(SensorParameters parameters)
-        {
-            parameters.castOffset = parameters.castOffset;
-            parameters.seekMethode = parameters.seekMethode;
-            parameters.castDistance = parameters.castDistance;
-            parameters.radius = parameters.radius;
-            parameters.stepCount = parameters.stepCount;
-            parameters.angle = parameters.angle;
-            parameters.offset = parameters.offset;
-            parameters.stepSize = parameters.stepSize;
-            parameters.distanceOffset = parameters.distanceOffset;
-            parameters.size = parameters.size;
-        }
+        public void ApplyParameters(SensorParameters param) => param.ApplyParameters(ref parameters);
         
         public void DrawGizmos()
         {
@@ -338,20 +326,7 @@ namespace TheMazurkaStudio.Utilities.Sensors
             return cast;
         }
         
-        public void ApplyParameters(SensorParameters parameters)
-        {
-            parameters.castOffset = parameters.castOffset;
-            parameters.seekMethode = parameters.seekMethode;
-            parameters.castDistance = parameters.castDistance;
-            parameters.radius = parameters.radius;
-            parameters.stepCount = parameters.stepCount;
-            parameters.angle = parameters.angle;
-            parameters.offset = parameters.offset;
-            parameters.stepSize = parameters.stepSize;
-            parameters.distanceOffset = parameters.distanceOffset;
-            parameters.size = parameters.size;
-        }
-        
+        public void ApplyParameters(SensorParameters param) => param.ApplyParameters(ref parameters);
         public void DrawGizmos()
         {
             if (transform == null) return;
@@ -401,6 +376,20 @@ namespace TheMazurkaStudio.Utilities.Sensors
         public float distanceOffset;
         public Vector2 size;
 
+        public void ApplyParameters(ref SensorParameters param)
+        {
+            param.castOffset = castOffset;
+            param.seekMethode = seekMethode;
+            param.castDistance = castDistance;
+            param.radius = radius;
+            param.stepCount = stepCount;
+            param.angle = angle;
+            param.offset = offset;
+            param.stepSize = stepSize;
+            param.distanceOffset = distanceOffset;
+            param.size = size;
+        }
+        
         public static SensorParameters Default => new SensorParameters()
         {
             seekMethode = SeekMethode.Raycast,
