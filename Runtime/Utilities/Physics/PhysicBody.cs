@@ -38,6 +38,10 @@ namespace TheMazurkaStudio.Utilities.Physics
 
         public void Drag(float dragAcceleration, float dragFactor = 1f)
         {
+            var d = Mathf.Min(Mathf.Abs(Velocity.magnitude), Mathf.Abs(dragFactor));
+            Body.AddForce(-Velocity.normalized * d * Mass, ForceMode2D.Impulse);
+            
+            return;
             var drag = (Velocity * Velocity).magnitude;
             var needAcceleration = (-VelocityDirection * drag * dragFactor) / Time.fixedDeltaTime;
             needAcceleration = Vector2.ClampMagnitude(needAcceleration, dragAcceleration);
