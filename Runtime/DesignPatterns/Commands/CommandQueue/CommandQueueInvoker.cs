@@ -6,93 +6,61 @@ namespace TheMazurkaStudio.Utilities
     /// <summary>
     /// Queue command, update them one by one each frame, dispose command when completed
     /// </summary>
-    public class CommandQueueInvoker<T> where T : ICompletableCommand
+    public class CommandQueueInvoker<T> where T : class, IThickCommand
     {
         protected Queue<T> commandQueue;
         protected T currentQueueCommand;
         protected bool _isExecutingCommands;
         
-        public event Action StartInvokeCommands;
         public event Action CommandHasChanged;
         public event Action AllCommandsHasBeenCompleted;
         
         
         public T GetCurrent => currentQueueCommand;
-        public bool IsExecutingCommands
-        {
-            get => _isExecutingCommands;
-            protected set
-            {
-                if (value == _isExecutingCommands) return;
-
-                _isExecutingCommands = value;
-
-                if (value) StartInvokeCommands?.Invoke();
-                else AllCommandsHasBeenCompleted?.Invoke();
-            }
-        }
 
         
         public void EnqueueCommand(T queueCommand, bool clearQueue = false)
         {
-            if (clearQueue) commandQueue.Clear();
+            if (clearQueue) Clear();
 
             commandQueue.Enqueue(queueCommand);
-
-            if (IsExecutingCommands) return;
-            if (!TryStartNewCommand()) return;
-
-            IsExecutingCommands = true;
+            TryStartNewCommand();
         }
-        public void Update()
+        public void Update(float deltaTime)
         {
-            if (IsExecutingCommands)
-            {
-                if (!IsCommandCompleted())
-                {
-                    currentQueueCommand.Execute();
-                }
-            }
+            currentQueueCommand?.Execute(deltaTime);
         }
-        public void Clear(bool completeCurrent = true)
+        public void Clear(bool ignoreCallbacks = false)
         {
-            if (completeCurrent && IsExecutingCommands)
+            if (currentQueueCommand != null)
             {
-                currentQueueCommand.Interrupt();
+                currentQueueCommand.OnDispose -= CurrentQueueCommandOnDispose;
+                currentQueueCommand.Interrupt(ignoreCallbacks);
             }
-
-            currentQueueCommand = default;
-            IsExecutingCommands = false;
+            
+            currentQueueCommand = null;
+            _isExecutingCommands = false;
             commandQueue.Clear();
         }
         
-        
-        protected bool TryStartNewCommand()
+        private bool TryStartNewCommand()
         {
-            if (commandQueue == null || commandQueue.Count < 1) return false;
+            if (commandQueue == null || _isExecutingCommands || commandQueue.Count < 1) return false;
 
             currentQueueCommand = commandQueue.Dequeue();
+            currentQueueCommand.OnDispose += CurrentQueueCommandOnDispose;
+            _isExecutingCommands = true;
             return true;
         }
-        protected bool IsCommandCompleted()
+
+        private void CurrentQueueCommandOnDispose(CommandStatus status)
         {
-            if (!currentQueueCommand.IsCompleted) return false;
-
-            OnCommandHasBeenCompleted(currentQueueCommand);
-
-            return true;
-        }
-        protected virtual void OnCommandHasBeenCompleted(T queueCommand)
-        {
-            queueCommand.Dispose();
-
-            if (TryStartNewCommand())
-            {
-                CommandHasChanged?.Invoke();
-                return;
-            }
+            currentQueueCommand.OnDispose -= CurrentQueueCommandOnDispose;
+            currentQueueCommand = null;
+            _isExecutingCommands = false;
             
-            IsExecutingCommands = false;
+            if (TryStartNewCommand())  CommandHasChanged?.Invoke();
+            else AllCommandsHasBeenCompleted?.Invoke();
         }
     }
 }
